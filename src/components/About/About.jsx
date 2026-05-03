@@ -8,8 +8,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 function About() {
 
-  const [skills, setSkills] = useState([]);   // 🔥 state
+  const [skills, setSkills] = useState([]);
 
+  // 🔥 FETCH DATA FROM BACKEND
   useEffect(() => {
     fetch("https://portfolio-backend-ww34.onrender.com/api/skills/")
       .then(res => res.json())
@@ -17,6 +18,7 @@ function About() {
       .catch(err => console.log(err));
   }, []);
 
+  // 🔥 GSAP ANIMATION
   useGSAP(() => {
     gsap.from(".circle", {
       x: -100,
@@ -24,7 +26,6 @@ function About() {
       opacity: 0,
       scrollTrigger: {
         trigger: ".circle",
-        scroll: "body",
         scrub: 1,
         start: "top 60%",
         end: "top 20%"
@@ -35,7 +36,7 @@ function About() {
   return (
     <div id="about">
 
-      {/* LEFT SIDE SAME */}
+      {/* LEFT SIDE */}
       <div className="leftabout">
         <div className="circle-line">
           <div className="circle"></div>
@@ -46,6 +47,8 @@ function About() {
         </div>
 
         <div className="aboutdetails">
+
+          {/* PERSONAL INFO */}
           <div className="personalinfo">
             <h1>Personal Info</h1>
             <ul>
@@ -55,6 +58,7 @@ function About() {
             </ul>
           </div>
 
+          {/* EDUCATION */}
           <div className="education">
             <h1>Education</h1>
             <ul>
@@ -64,24 +68,41 @@ function About() {
             </ul>
           </div>
 
+          {/* SKILLS LIST */}
           <div className="skills">
             <h1>Skills</h1>
             <ul>
               {skills.map((s, i) => (
-                <li key={i}>{s.title}</li>   // 🔥 dynamic list
+                <li key={i}>{s.title}</li>
               ))}
             </ul>
           </div>
+
         </div>
       </div>
 
-      {/* 🔥 RIGHT SIDE DYNAMIC */}
+      {/* RIGHT SIDE (CARDS) */}
       <div className="rightabout">
         <div className="skills-grid">
 
           {skills.map((skill, index) => (
             <div className="skill-box" key={index}>
-              <img src={skill.image} alt={skill.title} />
+              
+              {/* 🔥 IMAGE FIX (IMPORTANT) */}
+              <img
+                src={
+                  skill.image.startsWith("http")
+                    ? skill.image
+                    : `https://portfolio-backend-ww34.onrender.com${skill.image}`
+                }
+                alt={skill.title}
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  objectFit: "contain"
+                }}
+              />
+
               <span>{skill.title}</span>
             </div>
           ))}

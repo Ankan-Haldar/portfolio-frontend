@@ -15,20 +15,29 @@ function Project() {
 
   return (
     <div id="projects">
-        <h1 id='para'>Tech Projects</h1>
+      <h1 id='para'>Tech Projects</h1>
 
-        <div className="slider">
+      <div className="slider">
 
-            {projects.map((p, index) => (
-              <Card 
-                  title={p.title}
-                  image={p.image}
-                  github={p.github}
-                  live={p.live}
-              />
-            ))}
+        {projects.map((p, index) => (
+          <Card 
+            key={index}   // ✅ IMPORTANT (React warning fix)
 
-        </div>
+            title={p.title}
+
+            // 🔥 IMAGE FIX (same as skills)
+            image={
+              p.image?.startsWith("http")
+                ? p.image
+                : `https://portfolio-backend-ww34.onrender.com${p.image}`
+            }
+
+            github={p.github}
+            live={p.live}
+          />
+        ))}
+
+      </div>
     </div>
   )
 }
