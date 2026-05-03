@@ -5,7 +5,7 @@ import './project.css'
 function Project() {
 
   const [projects, setProjects] = useState([])
-  const API = import.meta.env.VITE_API_URL;
+  const API = import.meta.env.VITE_API_URL || "https://portfolio-backend-ww34.onrender.com";
 
   useEffect(() => {
     fetch(`${API}/api/projects/`)

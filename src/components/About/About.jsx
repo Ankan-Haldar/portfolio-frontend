@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 function About() {
 
   const [skills, setSkills] = useState([]);
-  const API = import.meta.env.VITE_API_URL;
+  const API = import.meta.env.VITE_API_URL || "https://portfolio-backend-ww34.onrender.com";
 
   // 🔥 FETCH SKILLS FROM BACKEND
   useEffect(() => {
