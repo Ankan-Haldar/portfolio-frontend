@@ -9,14 +9,30 @@ gsap.registerPlugin(ScrollTrigger);
 function About() {
 
   const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // 🔥 ENV + FALLBACK
   const API = import.meta.env.VITE_API_URL || "https://portfolio-backend-ww34.onrender.com";
 
-  // 🔥 FETCH SKILLS FROM BACKEND
+  // 🔥 FETCH WITH RETRY (fix Render sleep)
   useEffect(() => {
-    fetch(`${API}/api/skills/`)
-      .then(res => res.json())
-      .then(data => setSkills(data))
-      .catch(err => console.log(err));
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`${API}/api/skills/`);
+
+        if (!res.ok) throw new Error("API failed");
+
+        const data = await res.json();
+        setSkills(data);
+      } catch (err) {
+        console.log("Retrying...");
+        setTimeout(fetchData, 3000); // retry after 3 sec
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // 🔥 ANIMATION
@@ -72,11 +88,17 @@ function About() {
           {/* SKILLS LIST */}
           <div className="skills">
             <h1>Skills</h1>
-            <ul>
-              {skills.map((s, i) => (
-                <li key={i}>{s.title}</li>
-              ))}
-            </ul>
+
+            {loading ? (
+              <p style={{ color: "white" }}>Loading skills...</p>
+            ) : (
+              <ul>
+                {skills.map((s, i) => (
+                  <li key={i}>{s.title}</li>
+                ))}
+              </ul>
+            )}
+
           </div>
 
         </div>
@@ -86,31 +108,35 @@ function About() {
       <div className="rightabout">
         <div className="skills-grid">
 
-          {skills.map((skill, index) => {
+          {loading ? (
+            <p style={{ color: "white" }}>Loading...</p>
+          ) : (
+            skills.map((skill, index) => {
 
-            const imageUrl =
-              skill.image?.startsWith("http")
-                ? skill.image
-                : `${API}${skill.image}`;
+              const imageUrl =
+                skill.image?.startsWith("http")
+                  ? skill.image
+                  : `${API}${skill.image}`;
 
-            return (
-              <div className="skill-box" key={index}>
+              return (
+                <div className="skill-box" key={index}>
 
-                <img
-                  src={imageUrl}
-                  alt={skill.title}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.target.src =
-                      "https://via.placeholder.com/100?text=No+Image";
-                  }}
-                />
+                  <img
+                    src={imageUrl}
+                    alt={skill.title}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/100?text=No+Image";
+                    }}
+                  />
 
-                <span>{skill.title}</span>
+                  <span>{skill.title}</span>
 
-              </div>
-            );
-          })}
+                </div>
+              );
+            })
+          )}
 
         </div>
       </div>
