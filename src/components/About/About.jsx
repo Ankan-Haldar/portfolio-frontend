@@ -89,19 +89,14 @@ function About() {
             <div className="skill-box" key={index}>
               
               {/* 🔥 IMAGE FIX (IMPORTANT) */}
-              <img
-                src={
-                  skill.image.startsWith("http")
-                    ? skill.image
-                    : `https://portfolio-backend-ww34.onrender.com${skill.image}`
-                }
-                alt={skill.title}
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  objectFit: "contain"
-                }}
-              />
+              <img 
+  src={
+    skill.image?.startsWith("http")
+      ? skill.image
+      : `https://portfolio-backend-ww34.onrender.com${skill.image}`
+  } 
+  alt={skill.title}
+/>
 
               <span>{skill.title}</span>
             </div>
