@@ -1,0 +1,40 @@
+#projects{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 60px 0;
+}
+
+/* Title */
+#para{
+    font-size: 4vmax;
+    background: linear-gradient(to right, rgb(208, 54, 200), rgb(96, 220, 236));
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+/* Slider */
+.slider{
+    width: 90%;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+}
+
+/* Hide scrollbar */
+.slider::-webkit-scrollbar{
+    display: none;
+}
+
+/* Cards inside slider */
+.slider .card{
+    min-width: 240px;
+    scroll-snap-align: start;
+}

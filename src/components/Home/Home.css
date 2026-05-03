@@ -1,0 +1,186 @@
+#home{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px;
+    gap: 40px;
+}
+
+/* LEFT */
+.lefthome{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: white;
+}
+
+/* TEXT */
+.homedetails{
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Lines */
+.line1{
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+.line2{
+    font-size: 60px;
+    font-weight: bold;
+    margin: 10px 0;
+
+    background: linear-gradient(to right, #38bdf8, #a5f3fc);
+    background-clip: text;
+    color: transparent;
+}
+
+.line3{
+    font-size: 22px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* BUTTON GROUP */
+.home-buttons{
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* HIRE BUTTON */
+.hire-btn{
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: black;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hire-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0px 10px 25px rgba(56,189,248,0.4);
+}
+
+/* DOWNLOAD CV */
+.cv-btn{
+    padding: 12px 30px;
+    border: 2px solid #38bdf8;
+    border-radius: 25px;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+
+    /* Premium glass */
+    backdrop-filter: blur(8px);
+    background: rgba(56,189,248,0.05);
+}
+
+.cv-btn:hover{
+    background: #38bdf8;
+    color: black;
+    transform: translateY(-3px);
+}
+
+/* RIGHT */
+.righthome{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* IMAGE */
+.righthome img{
+    width: 65%;
+    max-width: 380px;
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+
+    box-shadow: 
+        0px 20px 60px rgba(0,0,0,0.6),
+        0px 0px 40px rgba(56,189,248,0.2);
+
+    transition: 0.4s;
+}
+
+.righthome img:hover{
+    transform: scale(1.05);
+    box-shadow: 
+        0px 25px 80px rgba(0,0,0,0.7),
+        0px 0px 60px rgba(56,189,248,0.4);
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:750px){
+
+    #home{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .lefthome, .righthome{
+        width: 100%;
+    }
+
+    /* IMAGE FIRST */
+    .righthome{
+        order: 1;
+    }
+
+    .righthome img{
+        width: 65%;
+        max-width: 250px;
+        margin-bottom: 10px;
+    }
+
+    /* TEXT SECOND */
+    .lefthome{
+        order: 2;
+    }
+
+    .homedetails{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center; 
+    }
+
+    .line1{ font-size: 14px; }
+    .line2{ font-size: 28px; }
+    .line3{ font-size: 16px; }
+
+    /* 🔥 BUTTON FIX */
+    .home-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;   /* allows wrapping if needed */
+}
+
+
+    /* Equal size buttons */
+.home-buttons .hire-btn,
+.home-buttons .cv-btn{
+    flex: 1;
+    max-width: 130px;
+    text-align: center;
+}
+}
