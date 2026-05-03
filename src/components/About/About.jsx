@@ -11,7 +11,7 @@ function About() {
   const [skills, setSkills] = useState([]);   // 🔥 state
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/skills/")
+    fetch("https://portfolio-backend-ww34.onrender.com/api/skills/")
       .then(res => res.json())
       .then(data => setSkills(data))
       .catch(err => console.log(err));

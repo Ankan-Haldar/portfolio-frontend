@@ -7,7 +7,7 @@ function Project() {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    fetch("https://your-backend.onrender.com/api/projects/")
+    fetch("https://portfolio-backend-ww34.onrender.com/api/projects/")
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.log(err))
