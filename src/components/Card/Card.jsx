@@ -2,6 +2,16 @@ import React from "react";
 import "./Card.css";
 
 function Card({ title, image, github, live }) {
+
+  const API = import.meta.env.VITE_API_URL;
+
+  // 🔥 HANDLE IMAGE (ALL CASES)
+  const imageUrl =
+    image?.startsWith("http")
+      ? image
+      : `${API}${image}`;
+
+  // 🔥 CLICK HANDLER
   const handleClick = () => {
     if (live) {
       window.open(live, "_blank");
@@ -13,35 +23,39 @@ function Card({ title, image, github, live }) {
   return (
     <div className="card" onClick={handleClick}>
       
-      {/* Title */}
+      {/* TITLE */}
       <h1>{title}</h1>
 
-      {/* Hover Overlay */}
+      {/* HOVER SECTION */}
       <div className="hovercard">
-        
-        {/* Image */}
+
+        {/* IMAGE */}
         <img
-          src={image}
+          src={imageUrl}
           alt={title || "project image"}
-          loading="lazy"   // 🔥 performance
+          loading="lazy"
+          onError={(e) => {
+            e.target.src =
+              "https://via.placeholder.com/300x200?text=No+Image";
+          }}
         />
 
-        {/* Buttons */}
+        {/* BUTTONS */}
         <div className="buttons">
 
-          {/* Live Button */}
+          {/* LIVE */}
           {live && (
             <a
               href={live}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()} // 🔥 prevent parent click
+              onClick={(e) => e.stopPropagation()}
             >
               Live
             </a>
           )}
 
-          {/* GitHub Button */}
+          {/* GITHUB */}
           {github && (
             <a
               href={github}

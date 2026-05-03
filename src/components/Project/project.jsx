@@ -5,9 +5,10 @@ import './project.css'
 function Project() {
 
   const [projects, setProjects] = useState([])
+  const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch("https://portfolio-backend-ww34.onrender.com/api/projects/")
+    fetch(`${API}/api/projects/`)
       .then(res => res.json())
       .then(data => setProjects(data))
       .catch(err => console.log(err))
@@ -21,17 +22,9 @@ function Project() {
 
         {projects.map((p, index) => (
           <Card 
-            key={index}   // ✅ IMPORTANT (React warning fix)
-
+            key={index}
             title={p.title}
-
-            // 🔥 IMAGE FIX (same as skills)
-            image={
-              p.image?.startsWith("http")
-                ? p.image
-                : `https://portfolio-backend-ww34.onrender.com${p.image}`
-            }
-
+            image={p.image}
             github={p.github}
             live={p.live}
           />

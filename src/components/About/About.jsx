@@ -9,16 +9,17 @@ gsap.registerPlugin(ScrollTrigger);
 function About() {
 
   const [skills, setSkills] = useState([]);
+  const API = import.meta.env.VITE_API_URL;
 
-  // 🔥 FETCH DATA FROM BACKEND
+  // 🔥 FETCH SKILLS FROM BACKEND
   useEffect(() => {
-    fetch("https://portfolio-backend-ww34.onrender.com/api/skills/")
+    fetch(`${API}/api/skills/`)
       .then(res => res.json())
       .then(data => setSkills(data))
       .catch(err => console.log(err));
   }, []);
 
-  // 🔥 GSAP ANIMATION
+  // 🔥 ANIMATION
   useGSAP(() => {
     gsap.from(".circle", {
       x: -100,
@@ -81,26 +82,35 @@ function About() {
         </div>
       </div>
 
-      {/* RIGHT SIDE (CARDS) */}
+      {/* RIGHT SIDE */}
       <div className="rightabout">
         <div className="skills-grid">
 
-          {skills.map((skill, index) => (
-            <div className="skill-box" key={index}>
-              
-              {/* 🔥 IMAGE FIX (IMPORTANT) */}
-              <img 
-  src={
-    skill.image?.startsWith("http")
-      ? skill.image
-      : `https://portfolio-backend-ww34.onrender.com${skill.image}`
-  } 
-  alt={skill.title}
-/>
+          {skills.map((skill, index) => {
 
-              <span>{skill.title}</span>
-            </div>
-          ))}
+            const imageUrl =
+              skill.image?.startsWith("http")
+                ? skill.image
+                : `${API}${skill.image}`;
+
+            return (
+              <div className="skill-box" key={index}>
+
+                <img
+                  src={imageUrl}
+                  alt={skill.title}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://via.placeholder.com/100?text=No+Image";
+                  }}
+                />
+
+                <span>{skill.title}</span>
+
+              </div>
+            );
+          })}
 
         </div>
       </div>
