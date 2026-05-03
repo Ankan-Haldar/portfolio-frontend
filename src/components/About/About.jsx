@@ -11,31 +11,39 @@ function About() {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 ENV + FALLBACK
+  // ✅ ENV + FALLBACK
   const API = import.meta.env.VITE_API_URL || "https://portfolio-backend-ww34.onrender.com";
 
-  // 🔥 FETCH WITH RETRY (fix Render sleep)
+  // ✅ FETCH WITH RETRY (handles Render sleep)
   useEffect(() => {
+    let retryCount = 0;
+
     const fetchData = async () => {
       try {
         const res = await fetch(`${API}/api/skills/`);
 
-        if (!res.ok) throw new Error("API failed");
+        if (!res.ok) throw new Error("API error");
 
         const data = await res.json();
+
         setSkills(data);
+        setLoading(false); // only on success
+
       } catch (err) {
-        console.log("Retrying...");
-        setTimeout(fetchData, 3000); // retry after 3 sec
-      } finally {
-        setLoading(false);
+        retryCount++;
+
+        if (retryCount < 5) {
+          setTimeout(fetchData, 3000); // retry after 3 sec
+        } else {
+          setLoading(false); // stop retry
+        }
       }
     };
 
     fetchData();
   }, []);
 
-  // 🔥 ANIMATION
+  // ✅ ANIMATION
   useGSAP(() => {
     gsap.from(".circle", {
       x: -100,
@@ -91,6 +99,8 @@ function About() {
 
             {loading ? (
               <p style={{ color: "white" }}>Loading skills...</p>
+            ) : skills.length === 0 ? (
+              <p style={{ color: "red" }}>Failed to load skills</p>
             ) : (
               <ul>
                 {skills.map((s, i) => (
@@ -110,6 +120,8 @@ function About() {
 
           {loading ? (
             <p style={{ color: "white" }}>Loading...</p>
+          ) : skills.length === 0 ? (
+            <p style={{ color: "red" }}>No skills found</p>
           ) : (
             skills.map((skill, index) => {
 
