@@ -11,39 +11,30 @@ function About() {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ ENV + FALLBACK
+  // ✅ ENV + fallback
   const API = import.meta.env.VITE_API_URL || "https://portfolio-backend-ww34.onrender.com";
 
-  // ✅ FETCH WITH RETRY (handles Render sleep)
+  // ✅ FETCH SKILLS
   useEffect(() => {
-    let retryCount = 0;
-
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${API}/api/skills/`);
-
-        if (!res.ok) throw new Error("API error");
-
-        const data = await res.json();
-
-        setSkills(data);
-        setLoading(false); // only on success
-
-      } catch (err) {
-        retryCount++;
-
-        if (retryCount < 5) {
-          setTimeout(fetchData, 3000); // retry after 3 sec
+    fetch(`${API}/api/skills/`)
+      .then(res => res.json())
+      .then(data => {
+        // 🔥 FIX: always array
+        if (Array.isArray(data)) {
+          setSkills(data);
         } else {
-          setLoading(false); // stop retry
+          setSkills([data]);
         }
-      }
-    };
-
-    fetchData();
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setSkills([]);
+        setLoading(false);
+      });
   }, []);
 
-  // ✅ ANIMATION
+  // ✅ GSAP animation
   useGSAP(() => {
     gsap.from(".circle", {
       x: -100,
@@ -73,7 +64,6 @@ function About() {
 
         <div className="aboutdetails">
 
-          {/* PERSONAL INFO */}
           <div className="personalinfo">
             <h1>Personal Info</h1>
             <ul>
@@ -83,7 +73,6 @@ function About() {
             </ul>
           </div>
 
-          {/* EDUCATION */}
           <div className="education">
             <h1>Education</h1>
             <ul>
@@ -93,14 +82,13 @@ function About() {
             </ul>
           </div>
 
-          {/* SKILLS LIST */}
           <div className="skills">
             <h1>Skills</h1>
 
             {loading ? (
               <p style={{ color: "white" }}>Loading skills...</p>
             ) : skills.length === 0 ? (
-              <p style={{ color: "red" }}>Failed to load skills</p>
+              <p style={{ color: "red" }}>No skills found</p>
             ) : (
               <ul>
                 {skills.map((s, i) => (
@@ -120,8 +108,6 @@ function About() {
 
           {loading ? (
             <p style={{ color: "white" }}>Loading...</p>
-          ) : skills.length === 0 ? (
-            <p style={{ color: "red" }}>No skills found</p>
           ) : (
             skills.map((skill, index) => {
 
@@ -138,8 +124,7 @@ function About() {
                     alt={skill.title}
                     loading="lazy"
                     onError={(e) => {
-                      e.target.src =
-                        "https://via.placeholder.com/100?text=No+Image";
+                      e.target.src = "https://via.placeholder.com/100?text=No+Image";
                     }}
                   />
 

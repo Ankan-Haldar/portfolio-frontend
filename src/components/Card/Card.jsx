@@ -3,15 +3,6 @@ import "./Card.css";
 
 function Card({ title, image, github, live }) {
 
-  const API = import.meta.env.VITE_API_URL;
-
-  // 🔥 HANDLE IMAGE (ALL CASES)
-  const imageUrl =
-    image?.startsWith("http")
-      ? image
-      : `${API}${image}`;
-
-  // 🔥 CLICK HANDLER
   const handleClick = () => {
     if (live) {
       window.open(live, "_blank");
@@ -22,28 +13,22 @@ function Card({ title, image, github, live }) {
 
   return (
     <div className="card" onClick={handleClick}>
-      
-      {/* TITLE */}
+
       <h1>{title}</h1>
 
-      {/* HOVER SECTION */}
       <div className="hovercard">
 
-        {/* IMAGE */}
         <img
-          src={imageUrl}
+          src={image}
           alt={title || "project image"}
           loading="lazy"
           onError={(e) => {
-            e.target.src =
-              "https://via.placeholder.com/300x200?text=No+Image";
+            e.target.src = "https://via.placeholder.com/300?text=No+Image";
           }}
         />
 
-        {/* BUTTONS */}
         <div className="buttons">
 
-          {/* LIVE */}
           {live && (
             <a
               href={live}
@@ -55,7 +40,6 @@ function Card({ title, image, github, live }) {
             </a>
           )}
 
-          {/* GITHUB */}
           {github && (
             <a
               href={github}
@@ -69,6 +53,7 @@ function Card({ title, image, github, live }) {
 
         </div>
       </div>
+
     </div>
   );
 }
