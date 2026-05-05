@@ -16,23 +16,29 @@ function About() {
 
   // ✅ FETCH SKILLS
   useEffect(() => {
-    fetch(`${API}/api/skills/`)
-      .then(res => res.json())
-      .then(data => {
-        // 🔥 FIX: always array
-        if (Array.isArray(data)) {
-          setSkills(data);
-        } else {
-          setSkills([data]);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setSkills([]);
-        setLoading(false);
-      });
-  }, []);
+  console.log("API URL:", API);
+
+  fetch(`${API}/api/skills/`)
+    .then(res => {
+      console.log("Response status:", res.status);
+      return res.json();
+    })
+    .then(data => {
+      console.log("DATA:", data);
+
+      if (Array.isArray(data)) {
+        setSkills(data);
+      } else {
+        setSkills([data]);
+      }
+      setLoading(false);
+    })
+    .catch(err => {
+      console.log("ERROR:", err);
+      setSkills([]);
+      setLoading(false);
+    });
+}, []);
 
   // ✅ GSAP animation
   useGSAP(() => {

@@ -18,7 +18,7 @@ function Nav() {
 
   return (
    <nav>
-    <h1>PORTFOLIO</h1>
+    <h1>ANKAN</h1>
     <ul className='desktopmenu'>
         
         <Link to='home' activeClass='active' spy={true} smooth={true} duration={500}><li>Home</li></Link>
