@@ -1,40 +1,224 @@
+/* ==========================================
+   PROJECT SECTION
+========================================== */
+
 #projects{
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 30px;
-    padding: 60px 0;
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    padding:120px 8%;
+
+    position:relative;
+    overflow:hidden;
 }
 
-/* Title */
+/* Background Glow */
+
+#projects::before{
+    content:"";
+
+    position:absolute;
+    width:500px;
+    height:500px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(56,189,248,.12),
+        transparent 70%
+    );
+
+    top:20%;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    pointer-events:none;
+    z-index:0;
+}
+
+/* ==========================================
+   HEADING
+========================================== */
+
 #para{
-    font-size: 4vmax;
-    background: linear-gradient(to right, rgb(208, 54, 200), rgb(96, 220, 236));
-    background-clip: text;
-    color: transparent;
-    text-align: center;
+    font-size:4rem;
+    font-weight:800;
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+    background:linear-gradient(
+        135deg,
+        #38bdf8,
+        #60a5fa,
+        #ec4899
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    position:relative;
+    z-index:2;
 }
 
-/* Slider */
+.project-subtitle{
+    max-width:800px;
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    font-size:1.05rem;
+    line-height:1.9;
+
+    margin-bottom:50px;
+
+    position:relative;
+    z-index:2;
+}
+
+/* ==========================================
+   PROJECT SLIDER
+========================================== */
+
 .slider{
-    width: 90%;
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 20px;
-    scroll-snap-type: x mandatory;
+    width:100%;
+
+    display:flex;
+
+    gap:30px;
+
+    overflow-x:auto;
+
+    padding:25px 10px;
+
+    scroll-behavior:smooth;
+    scroll-snap-type:x mandatory;
+
+    position:relative;
+    z-index:2;
 }
 
-/* Hide scrollbar */
+/* Hide Scrollbar */
+
 .slider::-webkit-scrollbar{
-    display: none;
+    display:none;
 }
 
-/* Cards inside slider */
+.slider{
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+/* ==========================================
+   PROJECT CARDS
+========================================== */
+
 .slider .card{
-    min-width: 240px;
-    scroll-snap-align: start;
+    min-width:340px;
+    max-width:340px;
+
+    flex-shrink:0;
+
+    scroll-snap-align:center;
+
+    border-radius:24px;
+
+    transition:
+    transform .4s ease,
+    box-shadow .4s ease;
+}
+
+.slider .card:hover{
+    transform:
+    translateY(-12px)
+    scale(1.03);
+
+    box-shadow:
+    0 20px 50px rgba(56,189,248,.25);
+}
+
+/* ==========================================
+   EMPTY PROJECT STATE
+========================================== */
+
+.empty-projects{
+    text-align:center;
+    padding:50px;
+}
+
+.empty-projects h3{
+    color:#38bdf8;
+    font-size:1.8rem;
+    margin-bottom:15px;
+}
+
+.empty-projects p{
+    color:#94a3b8;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+    #para{
+        font-size:3.5rem;
+    }
+}
+
+@media(max-width:992px){
+
+    .slider .card{
+        min-width:300px;
+        max-width:300px;
+    }
+}
+
+@media(max-width:768px){
+
+    #projects{
+        padding:100px 25px;
+    }
+
+    #para{
+        font-size:2.8rem;
+    }
+
+    .project-subtitle{
+        font-size:.95rem;
+    }
+
+    .slider{
+        gap:20px;
+    }
+
+    .slider .card{
+        min-width:270px;
+        max-width:270px;
+    }
+}
+
+@media(max-width:480px){
+
+    #para{
+        font-size:2.2rem;
+    }
+
+    .slider .card{
+        min-width:240px;
+        max-width:240px;
+    }
+
+    .project-subtitle{
+        font-size:.9rem;
+    }
 }
