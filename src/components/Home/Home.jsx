@@ -55,7 +55,7 @@ function Home() {
             </button>
 
             <a 
-              href="/cv.pdf" 
+              href="/Ankan_Haldar.pdf" 
               download 
               className="cv-btn"
             >
